@@ -1,18 +1,15 @@
 const emojiBox = document.querySelector('.emoji-box');
 const folderUrl = 'svg/';
+const repoOwner = 'SquareScreamYT';
+const repoName = 'emojis';
 
 function loadSvgFiles() {
-  fetch(folderUrl)
-    .then(response => response.text())
-    .then(html => {
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(html, 'text/html');
-      const links = doc.querySelectorAll('a');
-      
-      links.forEach(link => {
-        const href = link.getAttribute('href');
-        if (href && href.endsWith('.svg')) {
-          createEmojiButton(href);
+  fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/contents/svg`)
+    .then(response => response.json())
+    .then(data => {
+      data.forEach(file => {
+        if (file.name.endsWith('.svg')) {
+          createEmojiButton(file.name);
         }
       });
     })
