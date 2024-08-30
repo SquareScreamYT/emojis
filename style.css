@@ -35,12 +35,17 @@ h1, p {
   transition: background-color 0.3s ease;
   box-sizing: border-box;
   margin-bottom: 5px;
+  margin-right: 20px;
   display: grid;
-  grid-template-columns: repeat(10, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
   gap: 5px;
   -ms-overflow-style: none;
   scrollbar-width: none;
   height: fit-content;
+  width: calc(100% - 20px);
+  max-width: calc(100% - 20px);
+  overflow-x: visible;
+  padding-right: 5px;
 }
 
 .emoji-button {
@@ -53,6 +58,7 @@ h1, p {
   aspect-ratio: 1 / 1;
   margin: 5px;
   box-sizing: border-box;
+  padding: 5px;
   background-color: #f8f9fa;
   color: #343a40;
   border-radius: 5px;
@@ -60,6 +66,8 @@ h1, p {
   transition: background-color 0.3s ease;
   cursor: pointer;
   border: 2px solid #ced4da;
+  height: 100px;
+  height: 120px;
 }
 
 .emoji-button img {
