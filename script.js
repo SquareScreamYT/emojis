@@ -21,7 +21,8 @@ function createEmojiButton(fileName) {
   
   const button = document.createElement('button');
   button.className = 'emoji-button';
-  button.innerHTML = `<img src="${svgUrl}" alt="Emoji" width="32" height="32">`;
+  button.innerHTML = `<img src="${svgUrl}" alt="${fileName.replace(".svg", "").replace(/_/g, " ")}" width="32" height="32">
+  <br><span>${fileName.replace(".svg", "").replace(/_/g, " ")}</span>`;
   
   button.addEventListener('click', () => {
     const embedLink = `https://sq.is-a.dev/emojis/${svgUrl}`;
