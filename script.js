@@ -2,10 +2,19 @@ const emojiBox = document.querySelector('.emoji-box');
 const folderUrl = 'svg/';
 
 function loadSvgFiles() {
-  fetch('get_svgs.php')
-    .then(response => response.json())
-    .then(svgFiles => {
-      svgFiles.forEach(file => createEmojiButton(file));
+  fetch(folderUrl)
+    .then(response => response.text())
+    .then(html => {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+      const links = doc.querySelectorAll('a');
+      
+      links.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.endsWith('.svg')) {
+          createEmojiButton(href);
+        }
+      });
     })
     .catch(error => console.error('Error loading SVG files:', error));
 }
