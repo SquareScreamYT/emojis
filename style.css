@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Lato:wght@300&family=Noto+Color+Emoji:wght@400&display=swap');
+@font-face {
+  font-family: 'SF Pro Rounded';
+  font-style: normal;
+  font-weight: 400;
+  src: url("https://raw.githubusercontent.com/SquareScreamYT/sf-fonts/master/SF-Pro-Rounded-Light.otf") format("opentype");
+}
+
+html {
+  height: 100%;
+  width: 100%;
+  overflow-x:hidden
+}
+
+body {
+  background-color: #f8f9fa;
+  color: #343a40;
+  font-family: "Nunito", "SF Pro Rounded", "Apple Color Emoji", "Noto Color Emoji", "Lato", system-ui, -apple-system, Roboto, Oxygen, Ubuntu, Cantarell, BlinkMacSystemFont, 'Segoe UI', 'Open Sans', 'Helvetica Neue', sans-serif, monospace;
+  margin: 0;
+  padding-left: 2vh;
+  padding-right: 2vh; 
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+  transition: background-color 0.3s ease;
+}
+
+h1, p {
+  font-family: "Nunito", "SF Pro Rounded", "Apple Color Emoji", "Noto Color Emoji", "Lato", system-ui, -apple-system, Roboto, Oxygen, Ubuntu, Cantarell, BlinkMacSystemFont, 'Segoe UI', 'Open Sans', 'Helvetica Neue', sans-serif, monospace;
+  line-height: 1.5;
+  color: #343a40;
+  margin: 10px;
+}
+
+.emoji-box {
+  overflow-y: auto;
+  transition: background-color 0.3s ease;
+  box-sizing: border-box;
+  margin-bottom: 5px;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 10px;
+  max-width: 800px;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.emoji-button {
+  font-family: "Nunito", "SF Pro Rounded", "Apple Color Emoji", "Noto Color Emoji", "Lato", system-ui, -apple-system, Roboto, Oxygen, Ubuntu, Cantarell, BlinkMacSystemFont, 'Segoe UI', 'Open Sans', 'Helvetica Neue', sans-serif, monospace;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  padding: 5px;
+  box-sizing: border-box;
+  background-color: var(--bg-color-darker);
+  color: var(--text-color);
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+  border-color: var(--border-color);
+}
