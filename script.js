@@ -1,12 +1,26 @@
 const emojiBox = document.querySelector('.emoji-box');
 const folderUrl = 'svg/';
 
-const svgFiles = [
-  'happy_face.svg'
-];
+function loadSvgFiles() {
+  fetch(folderUrl)
+    .then(response => response.text())
+    .then(data => {
+      const parser = new DOMParser();
+      const htmlDoc = parser.parseFromString(data, 'text/html');
+      const links = htmlDoc.querySelectorAll('a');
+      
+      links.forEach(link => {
+        const fileName = link.getAttribute('href');
+        if (fileName.endsWith('.svg')) {
+          createEmojiButton(fileName);
+        }
+      });
+    })
+    .catch(error => console.error('Error loading SVG files:', error));
+}
 
-svgFiles.forEach(file => {
-  const svgUrl = folderUrl + file;
+function createEmojiButton(fileName) {
+  const svgUrl = folderUrl + fileName;
   
   const button = document.createElement('button');
   button.className = 'emoji-button';
@@ -24,4 +38,6 @@ svgFiles.forEach(file => {
   });
 
   emojiBox.appendChild(button);
-});
+}
+
+loadSvgFiles();
