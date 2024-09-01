@@ -1,23 +1,28 @@
-const emojiBox = document.querySelector('.emoji-box');
+const facesBox = document.getElementById('faces');
+const foodBox = document.getElementById('food');
 const folderUrl = 'svg/';
 const repoOwner = 'SquareScreamYT';
 const repoName = 'emojis';
 
 function loadSvgFiles() {
-  fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/contents/svg`)
-    .then(response => response.json())
-    .then(data => {
-      data.forEach(file => {
-        if (file.name.endsWith('.svg')) {
-          createEmojiButton(file.name);
-        }
-      });
-    })
-    .catch(error => console.error('Error loading SVG files:', error));
+  const folders = ['faces', 'food'];
+  
+  folders.forEach(folder => {
+    fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/contents/svg/${folder}`)
+      .then(response => response.json())
+      .then(data => {
+        data.forEach(file => {
+          if (file.name.endsWith('.svg')) {
+            createEmojiButton(file.name, folder);
+          }
+        });
+      })
+      .catch(error => console.error(`Error loading SVG files from ${folder}:`, error));
+  });
 }
 
-function createEmojiButton(fileName) {
-  const svgUrl = folderUrl + fileName;
+function createEmojiButton(fileName, folder) {
+  const svgUrl = `${folderUrl}${folder}/${fileName}`;
   
   const button = document.createElement('button');
   button.className = 'emoji-button';
@@ -35,7 +40,11 @@ function createEmojiButton(fileName) {
       });
   });
 
-  emojiBox.appendChild(button);
+  if (folder === 'faces') {
+    facesBox.appendChild(button);
+  } else if (folder === 'food') {
+    foodBox.appendChild(button);
+  }
 }
 
 loadSvgFiles();
