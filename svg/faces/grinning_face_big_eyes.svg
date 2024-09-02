@@ -3,11 +3,16 @@
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="16px" height="16px" viewBox="0 0 16 16" style="enable-background:new 0 0 16 16;" xml:space="preserve">
 <style type="text/css">
-	.st0{fill:#FFD43B;}
+	.st0{fill:#FCC419;}
 	.st1{fill:none;stroke:#495057;stroke-width:2;stroke-linecap:round;stroke-miterlimit:10;}
+	.st2{fill:#FF6B6B;}
+	.st3{fill:#F8F9FA;}
+	.st4{fill:none;stroke:#495057;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
 </style>
 <circle class="st0" cx="8" cy="8" r="8"/>
-<line class="st1" x1="5" y1="6" x2="5" y2="5"/>
-<line class="st1" x1="11" y1="5" x2="11" y2="6"/>
-<path class="st1" d="M4,10c2,2,6,2,8,0"/>
+<line class="st1" x1="5" y1="4" x2="5" y2="5"/>
+<line class="st1" x1="11" y1="4" x2="11" y2="5"/>
+<path class="st2" d="M13,8c0,2.7614241-2.2385759,5-5,5s-5-2.2385759-5-5H13z"/>
+<rect x="3" y="8" class="st3" width="10" height="2"/>
+<path class="st4" d="M13,8c0,2.7614241-2.2385759,5-5,5s-5-2.2385759-5-5H13z"/>
 </svg>

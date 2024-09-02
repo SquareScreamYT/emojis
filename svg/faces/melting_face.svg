@@ -3,8 +3,9 @@
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="16px" height="16px" viewBox="0 0 16 16" style="enable-background:new 0 0 16 16;" xml:space="preserve">
 <style type="text/css">
-	.st0{fill:#FFD43B;}
+	.st0{fill:#FCC419;}
 	.st1{fill:none;stroke:#495057;stroke-width:2;stroke-linecap:round;stroke-miterlimit:10;}
+	.st2{fill:none;stroke:#495057;stroke-linecap:round;stroke-miterlimit:10;}
 </style>
 <path class="st0" d="M3,10.9787226l0.1277111,0.094923c0.6423388,0.4774265,0.3046699,1.4977837-0.4956644,1.4977837H0.571428
 	C0.255837,12.5714293,0,12.8272667,0,13.1428585v0.000001c0,0.3155909,0.255837,0.5714283,0.571428,0.5714283h6.8571444
@@ -20,5 +21,5 @@
 <circle class="st0" cx="7" cy="6.5" r="6"/>
 <line class="st1" x1="5.5911083" y1="4.2923388" x2="5.5911083" y2="4.2923388"/>
 <line class="st1" x1="10" y1="7" x2="10" y2="7"/>
-<path class="st1" d="M4,7c0.8965087,1.9225693,3,3,5,3"/>
+<path class="st2" d="M4,7c0.8965087,1.9225693,3,3,5,3"/>
 </svg>

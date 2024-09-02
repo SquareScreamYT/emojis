@@ -7,11 +7,12 @@
 	.st1{fill:#FF6B6B;}
 	.st2{fill:#F8F9FA;}
 	.st3{fill:none;stroke:#495057;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st4{fill:none;stroke:#495057;stroke-linecap:round;stroke-miterlimit:10;}
 </style>
 <circle class="st0" cx="8" cy="8" r="8"/>
 <path class="st1" d="M13,8c0,2.7614241-2.2385759,5-5,5s-5-2.2385759-5-5H13z"/>
 <rect x="3" y="8" class="st2" width="10" height="2"/>
 <path class="st3" d="M13,8c0,2.7614241-2.2385759,5-5,5s-5-2.2385759-5-5H13z"/>
+<path class="st4" d="M10,5l0.000001-0.000001c0.5522842-0.5522842,1.4477139-0.5522842,1.9999981,0L12,5"/>
 <polyline class="st3" points="4,4 6,5 4,6 "/>
-<polyline class="st3" points="12,4 10,5 12,6 "/>
 </svg>

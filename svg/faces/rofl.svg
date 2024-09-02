@@ -3,15 +3,22 @@
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="16px" height="16px" viewBox="0 0 16 16" style="enable-background:new 0 0 16 16;" xml:space="preserve">
 <style type="text/css">
-	.st0{fill:#FFD43B;}
-	.st1{fill:none;stroke:#495057;stroke-width:2;stroke-linecap:round;stroke-miterlimit:10;}
-	.st2{fill:none;stroke:#495057;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	.st3{fill:none;stroke:#4DABF7;stroke-width:2;stroke-linecap:round;stroke-miterlimit:10;}
+	.st0{fill:#FCC419;}
+	.st1{fill:#FF6B6B;}
+	.st2{fill:#F8F9FA;}
+	.st3{fill:none;stroke:#495057;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st4{fill:#339AF0;stroke:#339AF0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
 </style>
 <circle class="st0" cx="8" cy="8" r="8"/>
-<path class="st1" d="M6.5857863,12.2426405c2.8284268,0,5.6568542-2.8284273,5.6568542-5.6568542"/>
-<polyline class="st2" points="3.0502524,8.7071066 5.1715727,8 4.4644661,10.1213207 "/>
-<polyline class="st2" points="10.1213207,4.4644661 8,5.1715727 8.7071066,3.0502524 "/>
-<line class="st3" x1="12.2426405" y1="3.7573593" x2="14.3639612" y2="3.0502524"/>
-<line class="st3" x1="3.0502524" y1="14.3639612" x2="3.7573593" y2="12.2426405"/>
+<path class="st1" d="M12.3301268,5.5C13.7108393,7.8914633,12.8914633,10.9494152,10.5,12.3301268
+	S5.0505848,12.8914633,3.669873,10.5L12.3301268,5.5z"/>
+<rect x="3.5" y="7.8660254" transform="matrix(0.8660254 -0.5 0.5 0.8660254 -3.2942286 5.4378223)" class="st2" width="10" height="2"/>
+<path class="st3" d="M12.3301268,5.5C13.7108393,7.8914633,12.8914633,10.9494152,10.5,12.3301268
+	S5.0505848,12.8914633,3.669873,10.5L12.3301268,5.5z"/>
+<polyline class="st3" points="2.5358984,6.5358982 4.7679491,6.4019237 3.5358984,8.2679491 "/>
+<polyline class="st3" points="9.4641018,2.5358984 8.2320509,4.4019237 10.4641018,4.2679491 "/>
+<path class="st4" d="M12.1084881,3.1161239l1.2759333,0.8424368c0.2902985,0.1916702,0.6830645,0.0426095,0.7730999-0.2934039
+	V3.6651554c0.0900354-0.3360131-0.1755791-0.661485-0.5228205-0.6406419L12.1084881,3.1161239z"/>
+<path class="st4" d="M1.716195,9.1161175l0.0916053,1.5262089c0.020842,0.3472404-0.3046315,0.6128559-0.640645,0.5228214H1.1671538
+	c-0.3360136-0.0900335-0.4850734-0.4827986-0.2934018-0.773097L1.716195,9.1161175z"/>
 </svg>

@@ -3,16 +3,18 @@
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="16px" height="16px" viewBox="0 0 16 16" style="enable-background:new 0 0 16 16;" xml:space="preserve">
 <style type="text/css">
-	.st0{fill:#FFD43B;}
-	.st1{fill:none;stroke:#495057;stroke-width:2;stroke-linecap:round;stroke-miterlimit:10;}
-	.st2{fill:none;stroke:#4DABF7;stroke-width:2;stroke-linecap:round;stroke-miterlimit:10;}
+	.st0{fill:#FCC419;}
+	.st1{fill:#FF6B6B;}
+	.st2{fill:#F8F9FA;}
+	.st3{fill:none;stroke:#495057;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st4{fill:none;stroke:#339AF0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
 </style>
 <circle class="st0" cx="8" cy="8" r="8"/>
-<path class="st1" d="M4,10c2,2,6,2,8,0"/>
-<path class="st1" d="M6,7.0000072l-0.000001-0.000001c-0.5522842-0.5522842-1.4477139-0.5522842-1.9999981,0L4,7.0000072"/>
-<path class="st1" d="M12,7.0000072l-0.000001-0.000001c-0.5522842-0.5522842-1.4477139-0.5522842-1.9999981,0L10,7.0000072"/>
-<line class="st2" x1="2" y1="9" x2="1" y2="11"/>
-<line class="st2" x1="14" y1="9" x2="15" y2="11"/>
-<line class="st1" x1="2" y1="5" x2="3" y2="4"/>
-<line class="st1" x1="13" y1="4" x2="14" y2="5"/>
+<path class="st1" d="M13,8c0,2.7614241-2.2385759,5-5,5s-5-2.2385759-5-5H13z"/>
+<rect x="3" y="8" class="st2" width="10" height="2"/>
+<path class="st3" d="M13,8c0,2.7614241-2.2385759,5-5,5s-5-2.2385759-5-5H13z"/>
+<polyline class="st3" points="4,4 6,5 4,6 "/>
+<polyline class="st3" points="12,4 10,5 12,6 "/>
+<line class="st4" x1="14" y1="6" x2="15" y2="8"/>
+<line class="st4" x1="2" y1="6" x2="1" y2="8"/>
 </svg>
