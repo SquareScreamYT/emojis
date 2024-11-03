@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emoji Comparison</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+
+    body {
+      font-family: Nunito, Arial, sans-serif;
+      background-color: #343a40;
+      color: #f8f9fa;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    h2 {
+      margin-top: 20px;
+      color: #ffd43b;
+    }
+
+    table {
+      width: 90%;
+      margin: 20px auto;
+      border-collapse: collapse;
+      background-color: #495057;
+    }
+
+    th, td {
+      border: 1px solid #adb5bd;
+      padding: 12px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #868e96;
+    }
+
+    td {
+      font-size: 48px;
+    }
+
+    img {
+      width: 48px;
+      height: 48px;
+    }
+
+    .noto-emoji {
+      font-family: 'Noto Color Emoji', sans-serif;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Emoji Comparison: Twemoji, Toss Face, Noto, Browser Default</h2>
+
+<table id="emojiTable">
+  <thead>
+    <tr>
+      <th>Twemoji</th>
+      <th>Toss Face</th>
+      <th>Noto Color Emoji</th>
+      <th>Browser Default</th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+
+<p>Note: Toss Face has more emojis: https://tossface.cho.sh/<br>
+Toss Face: https://github.com/toss/tossface<br>
+Noto Color Emoji: https://fonts.google.com/noto/specimen/Noto+Color+Emoji<br>
+Twemoji: https://github.com/jdecked/twemoji
+</p>
+
+<script>
+  const TWEMOJI_API_URL = "https://api.github.com/repos/jdecked/twemoji/contents/assets/svg";
+  const TOSSFACE_API_URL = "https://api.github.com/repos/toss/tossface/contents/dist/svg";
+
+  async function fetchGithubFiles(url) {
+    const response = await fetch(url, { headers: { "Accept": "application/vnd.github.v3+json" } });
+    if (!response.ok) throw new Error(`Failed to fetch: ${response.statusText}`);
+    return await response.json();
+  }
+
+  function twemojiToTossFace(twemojiFilename) {
+    return (
+      "u" +
+      twemojiFilename
+        .toUpperCase()
+        .split("-")
+        .join("_u")
+        .replace(".SVG", ".svg")
+    );
+  }
+
+  function getUnicodeFromFilename(filename) {
+    return filename
+      .replace(".svg", "")
+      .split("-")
+      .map(hex => String.fromCodePoint(parseInt(hex, 16)))
+      .join("");
+  }
+
+  async function populateEmojiTable() {
+    try {
+      const [twemojiFiles, tossFaceFiles] = await Promise.all([
+        fetchGithubFiles(TWEMOJI_API_URL),
+        fetchGithubFiles(TOSSFACE_API_URL)
+      ]);
+
+      const twemojiFilenames = twemojiFiles.map(file => file.name);
+      const tossFaceFilenames = tossFaceFiles.map(file => file.name);
+
+      const tbody = document.querySelector("#emojiTable tbody");
+
+      twemojiFilenames.forEach(twemojiFile => {
+        const tossFaceEquivalent = twemojiToTossFace(twemojiFile);
+        const isMatch = tossFaceFilenames.includes(tossFaceEquivalent);
+
+        const row = document.createElement("tr");
+
+        const twemojiCell = document.createElement("td");
+        const twemojiImg = document.createElement("img");
+        twemojiImg.src = `https://raw.githubusercontent.com/jdecked/twemoji/main/assets/svg/${twemojiFile}`;
+        twemojiImg.alt = `Twemoji ${twemojiFile}`;
+        twemojiCell.appendChild(twemojiImg);
+        row.appendChild(twemojiCell);
+
+        const tossFaceCell = document.createElement("td");
+        if (isMatch) {
+          const tossFaceImg = document.createElement("img");
+          tossFaceImg.src = `https://raw.githubusercontent.com/toss/tossface/main/dist/svg/${tossFaceEquivalent}`;
+          tossFaceImg.alt = `Toss Face ${tossFaceEquivalent}`;
+          tossFaceCell.appendChild(tossFaceImg);
+        } else {
+          tossFaceCell.textContent = "No Match";
+        }
+        row.appendChild(tossFaceCell);
+
+        const notoCell = document.createElement("td");
+        const notoUnicode = getUnicodeFromFilename(twemojiFile);
+        notoCell.classList.add("noto-emoji");
+        notoCell.textContent = notoUnicode;
+        row.appendChild(notoCell);
+
+        const defaultCell = document.createElement("td");
+        defaultCell.textContent = notoUnicode;
+        row.appendChild(defaultCell);
+
+        tbody.appendChild(row);
+      });
+    } catch (error) {
+      console.error("Error fetching emoji data:", error);
+    }
+  }
+
+  window.addEventListener("load", populateEmojiTable);
+</script>
+
+</body>
+</html>
