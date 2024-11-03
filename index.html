@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sq's emojis</title>
+    <style>
+    	@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+    	body {
+        	font-family: Nunito, Arial, sans-serif;
+          color: #495057;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        td {
+            padding: 10px;
+            text-align: center;
+        }
+        img {
+            width: 100px;
+            height: auto;
+            image-rendering: pixelated;
+        }
+        .filename {
+            margin-top: 5px;
+            font-size: 12px;
+            color: #495057;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Pixel Art Food Emojis</h1>
+<table id="emojiTable"></table>
+
+<script>
+    const baseUrl = 'https://raw.githubusercontent.com/SquareScreamYT/emojis/main/png/food/';
+    const apiUrl = 'https://api.github.com/repos/SquareScreamYT/emojis/contents/png/food';
+
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+            const table = document.getElementById('emojiTable');
+            data.forEach((file, index) => {
+                if (file.name.endsWith('.png')) {
+                    if (index % 5 === 0) {
+                        const row = table.insertRow();
+                    }
+                    const cell = table.rows[table.rows.length - 1].insertCell();
+                    
+                    const img = document.createElement('img');
+                    img.src = baseUrl + file.name;
+                    img.alt = file.name;
+
+                    const filename = document.createElement('div');
+                    filename.className = 'filename';
+                    filename.textContent = file.name;
+
+                    cell.appendChild(img);
+                    cell.appendChild(filename);
+                }
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching the image names:', error);
+        });
+</script>
+
+</body>
+</html>
