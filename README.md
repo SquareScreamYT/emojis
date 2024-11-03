@@ -16,4 +16,3 @@ Extra Skin Tones:
 #7b4e36  
 #5e3b2b  
 #3e261a  
-Brown: Skin Tone $7
