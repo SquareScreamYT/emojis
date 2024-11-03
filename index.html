@@ -5,23 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>sq's emojis</title>
     <style>
-    	@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
-    	body {
-        	font-family: Nunito, Arial, sans-serif;
-          color: #495057;
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+        body {
+            font-family: Nunito, Arial, sans-serif;
+            color: #495057;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            margin: 0;
+            background-color: #f8f9fa;
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
+        h1 {
+            margin-bottom: 20px;
         }
-        td {
-            padding: 10px;
+        .emoji-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 1200px;
+        }
+        .emoji-item {
+            margin: 10px;
             text-align: center;
+            flex: 1 1 50px;
+            min-width: 100px;
         }
         img {
-            width: 100px;
+            width: 100%;
             height: auto;
             image-rendering: pixelated;
+            max-width: 60px;
         }
         .filename {
             margin-top: 5px;
@@ -32,8 +46,9 @@
 </head>
 <body>
 
-<h1>Pixel Art Food Emojis</h1>
-<table id="emojiTable"></table>
+<h1>sq's emojis</h1>
+<h2>food</h2>
+<div class="emoji-container" id="emojiContainer"></div>
 
 <script>
     const baseUrl = 'https://raw.githubusercontent.com/SquareScreamYT/emojis/main/png/food/';
@@ -42,13 +57,11 @@
     fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
-            const table = document.getElementById('emojiTable');
-            data.forEach((file, index) => {
+            const container = document.getElementById('emojiContainer');
+            data.forEach(file => {
                 if (file.name.endsWith('.png')) {
-                    if (index % 5 === 0) {
-                        const row = table.insertRow();
-                    }
-                    const cell = table.rows[table.rows.length - 1].insertCell();
+                    const item = document.createElement('div');
+                    item.className = 'emoji-item';
                     
                     const img = document.createElement('img');
                     img.src = baseUrl + file.name;
@@ -58,8 +71,9 @@
                     filename.className = 'filename';
                     filename.textContent = file.name;
 
-                    cell.appendChild(img);
-                    cell.appendChild(filename);
+                    item.appendChild(img);
+                    item.appendChild(filename);
+                    container.appendChild(item);
                 }
             });
         })
