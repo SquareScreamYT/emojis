@@ -75,12 +75,14 @@
 Toss Face: https://github.com/toss/tossface<br>
 Noto Color Emoji: https://fonts.google.com/noto/specimen/Noto+Color+Emoji<br>
 Twemoji: https://github.com/jdecked/twemoji<br>
-OpenMoji: https://github.com/hfg-gmuend/openmoji</p>
+OpenMoji: https://github.com/hfg-gmuend/openmoji/tree/master/color/72x72</p>
 
 <script>
   const TWEMOJI_API_URL = "https://api.github.com/repos/jdecked/twemoji/contents/assets/svg";
   const TOSSFACE_API_URL = "https://api.github.com/repos/toss/tossface/contents/dist/svg";
-  const OPENMOJI_API_URL = "https://api.github.com/repos/hfg-gmuend/openmoji/contents/color/72x72"; // OpenMoji PNGs
+  const OPENMOJI_API_URL = "https://api.github.com/repos/hfg-gmuend/openmoji/contents/color/72x72";
+
+  const CHUNK_SIZE = 16;
 
   async function fetchGithubFiles(url) {
     const response = await fetch(url, { headers: { "Accept": "application/vnd.github.v3+json" } });
@@ -115,7 +117,7 @@ OpenMoji: https://github.com/hfg-gmuend/openmoji</p>
       .join("-");
   }
 
-  async function populateEmojiTable() {
+  async function populateEmojiTable(startIndex = 0) {
     try {
       const [twemojiFiles, tossFaceFiles, openMojiFiles] = await Promise.all([
         fetchGithubFiles(TWEMOJI_API_URL),
@@ -129,10 +131,13 @@ OpenMoji: https://github.com/hfg-gmuend/openmoji</p>
 
       const tbody = document.querySelector("#emojiTable tbody");
 
-      twemojiFilenames.forEach(twemojiFile => {
+      const endIndex = Math.min(startIndex + CHUNK_SIZE, twemojiFilenames.length);
+      const emojiSubset = twemojiFilenames.slice(startIndex, endIndex);
+
+      emojiSubset.forEach(twemojiFile => {
         const tossFaceEquivalent = twemojiToTossFace(twemojiFile);
         const isMatch = tossFaceFilenames.includes(tossFaceEquivalent);
-        const openMojiEquivalent = twemojiToOpenMoji(twemojiFile) + ".png"; // OpenMoji PNG filename
+        const openMojiEquivalent = twemojiToOpenMoji(twemojiFile) + ".png";
         const isOpenMojiMatch = openMojiFilenames.includes(openMojiEquivalent);
 
         const row = document.createElement("tr");
@@ -178,12 +183,25 @@ OpenMoji: https://github.com/hfg-gmuend/openmoji</p>
 
         tbody.appendChild(row);
       });
+
     } catch (error) {
       console.error("Error fetching emoji data:", error);
     }
   }
 
-  window.addEventListener("load", populateEmojiTable);
+  let currentIndex = 0;
+
+  window.addEventListener("load", () => {
+    populateEmojiTable(currentIndex);
+    currentIndex += CHUNK_SIZE;
+  });
+
+  window.addEventListener("scroll", () => {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
+      populateEmojiTable(currentIndex);
+      currentIndex += CHUNK_SIZE;
+    }
+  });
 </script>
 
 </body>
