@@ -58,8 +58,8 @@ def replace_yellow_with_skin_tones(src_folder, output_folder):
             print(f"Completed: {filename}\n")
 
 if __name__ == "__main__":
-    src_folder = "C:/Users/KFX/OneDrive/Documents/emojis/png/people_src"
-    output_folder = "C:/Users/KFX/OneDrive/Documents/emojis/png/people"
+    src_folder = "C:/Users/KFX/OneDrive/Documents/emojis/png/people_1color_src"
+    output_folder = "C:/Users/KFX/OneDrive/Documents/emojis/png/people_1color"
     print("Starting emoji skin tone conversion...")
     replace_yellow_with_skin_tones(src_folder, output_folder)
     print("All files processed successfully!")
