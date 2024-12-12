@@ -5,7 +5,7 @@ def hex_to_rgb(hex_color):
     hex_color = hex_color.lstrip('#')
     return tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
 
-def replace_yellow_with_skin_tones(folder_path):
+def replace_yellow_with_skin_tones(src_folder, output_folder):
     # Original yellow colors
     yellow1 = hex_to_rgb('#ffd43b')
     yellow2 = hex_to_rgb('#fcc419')
@@ -24,10 +24,13 @@ def replace_yellow_with_skin_tones(folder_path):
         hex_to_rgb('#3e261a'),  # 10
     ]
     
-    for filename in os.listdir(folder_path):
+    # Create output folder if it doesn't exist
+    os.makedirs(output_folder, exist_ok=True)
+    
+    for filename in os.listdir(src_folder):
         if filename.lower().endswith('.png'):
             print(f"Processing: {filename}")
-            image_path = os.path.join(folder_path, filename)
+            image_path = os.path.join(src_folder, filename)
             
             # Process 5 tones using pairs of skin tones
             for tone_idx in range(5):
@@ -50,12 +53,13 @@ def replace_yellow_with_skin_tones(folder_path):
                 img.putdata(new_data)
                 
                 new_filename = f"{os.path.splitext(filename)[0]}_tone{tone_idx + 1}.png"
-                new_path = os.path.join(folder_path, new_filename)
+                new_path = os.path.join(output_folder, new_filename)
                 img.save(new_path, 'PNG')
             print(f"Completed: {filename}\n")
 
 if __name__ == "__main__":
-    folder_path = "C:/Users/KFX/OneDrive/Documents/emojis/png/people"
+    src_folder = "C:/Users/KFX/OneDrive/Documents/emojis/png/people_src"
+    output_folder = "C:/Users/KFX/OneDrive/Documents/emojis/png/people"
     print("Starting emoji skin tone conversion...")
-    replace_yellow_with_skin_tones(folder_path)
+    replace_yellow_with_skin_tones(src_folder, output_folder)
     print("All files processed successfully!")
