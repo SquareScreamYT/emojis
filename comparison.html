@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Emoji Comparison</title>
   <style>
-    /* add openmoji */
     @import url('https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap');
     @import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
 
@@ -56,7 +55,7 @@
 </head>
 <body>
 
-<h2>Emoji Comparison: Twemoji, Toss Face, Noto, Browser Default</h2>
+<h2>Emoji Comparison: Twemoji, Toss Face, Noto, OpenMoji, Browser Default</h2>
 
 <table id="emojiTable">
   <thead>
@@ -64,6 +63,7 @@
       <th>Twemoji</th>
       <th>Toss Face</th>
       <th>Noto Color Emoji</th>
+      <th>OpenMoji</th>
       <th>Browser Default</th>
     </tr>
   </thead>
@@ -74,12 +74,15 @@
 <p>Note: Toss Face has more emojis: https://tossface.cho.sh/<br>
 Toss Face: https://github.com/toss/tossface<br>
 Noto Color Emoji: https://fonts.google.com/noto/specimen/Noto+Color+Emoji<br>
-Twemoji: https://github.com/jdecked/twemoji
-</p>
+Twemoji: https://github.com/jdecked/twemoji<br>
+OpenMoji: https://github.com/hfg-gmuend/openmoji/tree/master/color/72x72</p>
 
 <script>
   const TWEMOJI_API_URL = "https://api.github.com/repos/jdecked/twemoji/contents/assets/svg";
   const TOSSFACE_API_URL = "https://api.github.com/repos/toss/tossface/contents/dist/svg";
+  const OPENMOJI_API_URL = "https://api.github.com/repos/hfg-gmuend/openmoji/contents/color/72x72";
+
+  const CHUNK_SIZE = 16;
 
   async function fetchGithubFiles(url) {
     const response = await fetch(url, { headers: { "Accept": "application/vnd.github.v3+json" } });
@@ -106,21 +109,36 @@ Twemoji: https://github.com/jdecked/twemoji
       .join("");
   }
 
-  async function populateEmojiTable() {
+  function twemojiToOpenMoji(twemojiFilename) {
+    return twemojiFilename
+      .replace(".svg", "")
+      .split("-")
+      .map(hex => hex.toUpperCase())
+      .join("-");
+  }
+
+  async function populateEmojiTable(startIndex = 0) {
     try {
-      const [twemojiFiles, tossFaceFiles] = await Promise.all([
+      const [twemojiFiles, tossFaceFiles, openMojiFiles] = await Promise.all([
         fetchGithubFiles(TWEMOJI_API_URL),
-        fetchGithubFiles(TOSSFACE_API_URL)
+        fetchGithubFiles(TOSSFACE_API_URL),
+        fetchGithubFiles(OPENMOJI_API_URL)
       ]);
 
       const twemojiFilenames = twemojiFiles.map(file => file.name);
       const tossFaceFilenames = tossFaceFiles.map(file => file.name);
+      const openMojiFilenames = openMojiFiles.map(file => file.name);
 
       const tbody = document.querySelector("#emojiTable tbody");
 
-      twemojiFilenames.forEach(twemojiFile => {
+      const endIndex = Math.min(startIndex + CHUNK_SIZE, twemojiFilenames.length);
+      const emojiSubset = twemojiFilenames.slice(startIndex, endIndex);
+
+      emojiSubset.forEach(twemojiFile => {
         const tossFaceEquivalent = twemojiToTossFace(twemojiFile);
         const isMatch = tossFaceFilenames.includes(tossFaceEquivalent);
+        const openMojiEquivalent = twemojiToOpenMoji(twemojiFile) + ".png";
+        const isOpenMojiMatch = openMojiFilenames.includes(openMojiEquivalent);
 
         const row = document.createElement("tr");
 
@@ -148,18 +166,42 @@ Twemoji: https://github.com/jdecked/twemoji
         notoCell.textContent = notoUnicode;
         row.appendChild(notoCell);
 
+        const openMojiCell = document.createElement("td");
+        if (isOpenMojiMatch) {
+          const openMojiImg = document.createElement("img");
+          openMojiImg.src = `https://raw.githubusercontent.com/hfg-gmuend/openmoji/master/color/72x72/${openMojiEquivalent}`;
+          openMojiImg.alt = `OpenMoji ${openMojiEquivalent}`;
+          openMojiCell.appendChild(openMojiImg);
+        } else {
+          openMojiCell.textContent = "No Match";
+        }
+        row.appendChild(openMojiCell);
+
         const defaultCell = document.createElement("td");
         defaultCell.textContent = notoUnicode;
         row.appendChild(defaultCell);
 
         tbody.appendChild(row);
       });
+
     } catch (error) {
       console.error("Error fetching emoji data:", error);
     }
   }
 
-  window.addEventListener("load", populateEmojiTable);
+  let currentIndex = 0;
+
+  window.addEventListener("load", () => {
+    populateEmojiTable(currentIndex);
+    currentIndex += CHUNK_SIZE;
+  });
+
+  window.addEventListener("scroll", () => {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
+      populateEmojiTable(currentIndex);
+      currentIndex += CHUNK_SIZE;
+    }
+  });
 </script>
 
 </body>
