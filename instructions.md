@@ -10,4 +10,6 @@
 
 5. the results are in the png/people_1color folder
 
-6. the rest of the people images are in the png/people folder
+6. use mergeimages.py to merge the images
+
+7. the rest of the people images are in the png/people folder
