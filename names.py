@@ -138,67 +138,72 @@ for filename, unicode in food.items():
     continue
   chars = [chr(int(code, 16)) for code in unicode.split('-')]
   emoji = ''.join(chars)
-  print(f"{filename} -> {emoji}")
+  print(f"{emoji}: {filename}")
 
-from PIL import Image
-import fontforge
+from fontTools.ttLib import TTFont, newTable
+from fontTools.ttLib.tables import _n_a_m_e
+from fontTools.ttLib.tables._c_m_a_p import CmapSubtable
+import os
 
-PIXEL_SIZE = 8  # Each font character is 8x8 pixels
+def create_color_emoji_font(food_dict, output_path="color_emoji.ttf"):
+    font = TTFont()
+    
+    # Add required tables with initialized values
+    head = newTable('head')
+    head.magicNumber = 0x5F0F3CF5
+    head.flags = 0x000B
+    head.unitsPerEm = 1000
+    head.created = 3406620153
+    head.modified = 3406620153
+    font['head'] = head
 
-# Load image and convert it to a 1-bit (black & white) image
-def load_image(image_path):
-    img = Image.open(image_path)
-    img = img.convert("1")  # Convert to black and white (1-bit)
-    return img
+    hhea = newTable('hhea')
+    hhea.ascent = 900
+    hhea.descent = -100
+    hhea.lineGap = 0
+    font['hhea'] = hhea
 
-# Convert image to a pixel array
-def image_to_pixels(img):
-    pixels = []
-    for y in range(PIXEL_SIZE):
-        row = []
-        for x in range(PIXEL_SIZE):
-            pixel = img.getpixel((x, y))
-            row.append(1 if pixel == 0 else 0)  # 1 for black, 0 for white
-        pixels.append(row)
-    return pixels
+    maxp = newTable('maxp')
+    maxp.numGlyphs = len(food_dict)
+    font['maxp'] = maxp
 
-# Create a font using FontForge
-def create_font(images_dict):
-    font = fontforge.font()  # Create a new font object
+    os2 = newTable('OS/2')
+    os2.version = 4
+    os2.usWeightClass = 400
+    os2.usWidthClass = 5
+    font['OS/2'] = os2
 
-    # Loop over each image and its corresponding Unicode
-    for image_file, unicode_str in images_dict.items():
-        # Convert the unicode string to an integer
-        unicode_val = int(unicode_str, 16)
+    name = newTable('name')
+    name.names = []
+    namerecord = _n_a_m_e.NameRecord()
+    namerecord.nameID = 1
+    namerecord.string = "Color Emoji Font"
+    name.names.append(namerecord)
+    font['name'] = name
 
-        # Load the image and convert it to a pixel grid
-        img = load_image(image_file)
-        pixels = image_to_pixels(img)
+    # Setup CMAP table
+    cmap = newTable('cmap')
+    subtable = CmapSubtable.newSubtable(3, 1)
+    subtable.cmap = {}
+    cmap.tables = [subtable]
+    font['cmap'] = cmap
 
-        # Create a new glyph in FontForge using the Unicode value
-        glyph = font.createChar(unicode_val)  # Using the Unicode codepoint
+    # Setup color tables
+    colr = newTable('COLR')
+    cpal = newTable('CPAL')
+    font['COLR'] = colr
+    font['CPAL'] = cpal
 
-        # Add the pixel data to the glyph
-        for y in range(PIXEL_SIZE):
-            for x in range(PIXEL_SIZE):
-                if pixels[y][x] == 1:
-                    glyph.addPoint(x, y, 'line')
+    # Add emoji mappings
+    for filename, unicode_value in food_dict.items():
+        if unicode_value == "none":
+            continue
+        
+        codes = [int(code, 16) for code in unicode_value.split('-')]
+        for code in codes:
+            subtable.cmap[code] = filename.replace('.png', '')
 
-        glyph.left_side_bearing = 0  # Optional: Set side bearings
-        glyph.right_side_bearing = 0  # Optional: Set side bearings
+    font.save(output_path)
 
-    import os
-
-    # Define the path to the Downloads folder (change <YourUsername> accordingly)
-    downloads_folder = "C:\\Users\\KFX\\Downloads\\"
-    output_file = os.path.join(downloads_folder, "output_font.ttf")
-
-    # Ensure the Downloads folder exists (usually it does)
-    os.makedirs(downloads_folder, exist_ok=True)
-
-    # Save the font to the Downloads folder
-    font.generate(output_file)
-    print(f"Font generated and saved to: {output_file}")
-
-# Create the font using the images and Unicode mappings
-create_font(food)
+# Use the existing food dictionary
+create_color_emoji_font(food)
